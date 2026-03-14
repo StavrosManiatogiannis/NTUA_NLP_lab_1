@@ -6,8 +6,6 @@ TRAIN_LM=$DATA/train/lm_train.text
 LM_TMP=$DATA/local/lm_tmp
 BUILD_LM=~/kaldi/tools/irstlm/bin/build-lm.sh
 
-mkdir -p $LM_TMP
-
 # IRSTLM script must be executable
 if [ ! -x "$BUILD_LM" ]; then
     chmod +x "$BUILD_LM"
