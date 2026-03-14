@@ -1,38 +1,37 @@
 import subprocess
+import os
+
 
 # The filepath to the wav files of the speakers
-wav_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/wav"
+wav_filepath = os.path.expanduser("~/usc/filesets/wav")
 
 # The filepath to the transcriptions
-transcription_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/transcriptions.txt"
+transcription_filepath = os.path.expanduser("~/usc/transcriptions.txt")
 
 # The filepath to the lexicon
-lexicon_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/lexicon.txt"
+lexicon_filepath = os.path.expanduser("~/usc/lexicon.txt")
 
 
 
 # The filepath to the training data we were given
-source_train_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/filesets/training.txt"
+source_train_filepath = os.path.expanduser("~/usc/filesets/training.txt")
 
 # The filepath to the validation data we were given
-source_val_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/filesets/validation.txt"
+source_val_filepath = os.path.expanduser("~/usc/filesets/validation.txt")
 
 # The filepath to the testing data we were given
-source_test_filepath = "/home/user/uni/8th_semester/nlp/lab_1/usc/filesets/testing.txt"
+source_test_filepath = os.path.expanduser("~/usc/filesets/testing.txt")
 
 
 
 # The filepath to the files we want to generate regarding training
-destination_train_filepath = "/home/user/uni/8th_semester/nlp/lab_1/kaldi/egs/usc/data/train/"
+destination_train_filepath = os.path.expanduser("~/kaldi/egs/usc/data/train/")
 
 # The filepath to the files we want to generate regarding validation
-destination_val_filepath = "/home/user/uni/8th_semester/nlp/lab_1/kaldi/egs/usc/data/dev/"
+destination_val_filepath = os.path.expanduser("~/kaldi/egs/usc/data/dev/")
 
 # The filepath to the files we want to generate regarding testing
-destination_test_filepath = "/home/user/uni/8th_semester/nlp/lab_1/kaldi/egs/usc/data/test/"
-
-
-
+destination_test_filepath = os.path.expanduser("~/kaldi/egs/usc/data/test/")
 
 
 # Get a sentence and replace the words with their phonemes
@@ -58,7 +57,7 @@ def convert_to_lexicon(utterance):
 
 def generate_files(start_filepath, final_filepath):
 
-    
+    os.makedirs(final_filepath, exist_ok=True) # create the directory if it does not exist
     write_text_uttids = ""
     write_text_utt2spk = ""
     write_text_wav = ""
@@ -89,16 +88,16 @@ def generate_files(start_filepath, final_filepath):
 
             current_id += 1
     
-    with open(f"{final_filepath}/uttids", "w") as file:
+    with open(os.path.join(final_filepath, "uttids"), "w") as file:
         file.write(write_text_uttids)
 
-    with open(f"{final_filepath}/utt2spk","w") as file:
+    with open(os.path.join(final_filepath, "utt2spk"),"w") as file:
         file.write(write_text_utt2spk)
     
-    with open(f"{final_filepath}/wav.scp", "w") as file:
+    with open(os.path.join(final_filepath, "wav.scp"), "w") as file:
         file.write(write_text_wav)
 
-    with open(f"{final_filepath}/text", "w") as file:
+    with open(os.path.join(final_filepath, "text"), "w") as file:
         file.write(write_text_text)
 
     
