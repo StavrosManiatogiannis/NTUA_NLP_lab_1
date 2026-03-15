@@ -61,8 +61,10 @@ subprocess.run(["ln", "-s", f"{usc_directory}/steps/_kaldi.sh", f"{usc_directory
 # Create the conf folder
 subprocess.run(["mkdir", f"{usc_directory}/conf",])
 
-# Copy mfcc.conf
-subprocess.run(["cp", f"{wsj_s5_directory}/conf/mfcc.conf", f"{usc_directory}/conf/mfcc.conf"])
+# Create mfcc.conf
+conf_lines = ["--use-energy=false\n","--sample-frequency=22050"]
+with open(f"{usc_directory}/conf/mfcc.conf", "w") as conf_file:
+    conf_file.writelines(conf_lines)
 
 # Create directories inside data
 dir_to_create = ["lang", "local", "local/dict", "local/lm_tmp", "local/nist_lm"]
