@@ -68,12 +68,14 @@ def generate_files(start_filepath, final_filepath):
             # remove the newline character
             current_line = current_line.strip("\n")
             
+            utterance_id = f"{current_line.split('_')[0]}_{current_id}"
+
             # the ids are from 0 to lines-1
-            write_text_uttids += f"{current_id}\n"
+            write_text_uttids += f"{utterance_id}\n"
 
             # 
-            write_text_utt2spk += f"{current_id} {current_line.split('_')[0]}\n"
-            write_text_wav += f"{current_id} {wav_filepath}/{current_line}.wav\n"
+            write_text_utt2spk += f"{utterance_id} {current_line.split('_')[0]}\n"
+            write_text_wav += f"{utterance_id} {wav_filepath}/{current_line}.wav\n"
             
             utterance_instance = current_line.split('_')[1]
             utterance_transcription = ""
@@ -83,7 +85,7 @@ def generate_files(start_filepath, final_filepath):
                         utterance_transcription = ' '.join(line.split(" ")[1:]).strip("\n")
                         break
             
-            write_text_text += f"{current_id} {convert_to_lexicon(utterance_transcription)}\n"
+            write_text_text += f"{utterance_id} {convert_to_lexicon(utterance_transcription)}\n"
 
 
             current_id += 1
