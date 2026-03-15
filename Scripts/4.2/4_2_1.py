@@ -11,8 +11,7 @@ with open(usc_lexicon) as f:
     for line in f:
         parts = line.strip().split()
         for p in parts[1:]:
-            if p != "<oov>": #<oov> (out of vocabulary) is not phoneme but it appears at usc/lexicon.txt
-                phonemes.add(p)
+            phonemes.add(p)
 
 phonemes = sorted(phonemes)
 
@@ -27,11 +26,15 @@ with open(os.path.join(dict_dir, "optional_silence.txt"), "w") as f: #creation o
 with open(os.path.join(dict_dir, "nonsilence_phones.txt"), "w") as f: #creation of nonsilence_phones.txt
     for p in phonemes:
         if p != sil:
-            f.write(p + "\n")
+            if p != "<oov>": #<oov> (out of vocabulary) is not phoneme
+                f.write(p + "\n")
 
 with open(os.path.join(dict_dir, "lexicon.txt"), "w") as f:  #creation of lexicon.txt
     for p in phonemes:
-        f.write(f"{p} {p}\n")
+        if p != "<oov>":
+            f.write(f"{p} {p}\n")
+        else:
+            f.write(f"{p} {sil}\n") # lexicon maps <oov> to silent phoneme
 
 #creation of lm_train.text files
 
