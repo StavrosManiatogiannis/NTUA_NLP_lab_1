@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Paths
 DATA=~/kaldi/egs/usc/data
 S5=~/kaldi/egs/wsj/s5
 
