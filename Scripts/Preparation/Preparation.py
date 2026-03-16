@@ -3,7 +3,7 @@ import os
 
 
 # The filepath to the wav files of the speakers
-wav_filepath = os.path.expanduser("~/usc/filesets/wav")
+wav_filepath = os.path.expanduser("~/usc/wav")
 
 # The filepath to the transcriptions
 transcription_filepath = os.path.expanduser("~/usc/transcriptions.txt")
