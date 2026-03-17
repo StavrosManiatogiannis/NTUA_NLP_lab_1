@@ -37,7 +37,7 @@ with open(f"{usc_directory}/cmd.sh", "r") as cmd_file:
     cmd_file_lines = cmd_file.readlines()
 
 cmd_file_lines[12] = "export train_cmd=run.pl\n"
-cmd_file_lines[13] = "export decode_cmd=\"run.pl\" --mem 2G\n"
+cmd_file_lines[13] = "export decode_cmd=\"run.pl --mem 2G\"\n"
 cmd_file_lines[15] = "export cuda_cmd=\"run.pl --gpu 1\"\n"
 
 
