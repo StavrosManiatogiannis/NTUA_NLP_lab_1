@@ -55,8 +55,8 @@ subprocess.run(["ln","-s", f"{wsj_s5_directory}/utils", f"{usc_directory}/utils"
 # Create "local" directory
 subprocess.run(["mkdir", f"{usc_directory}/local"])
 
-# Create soft link to "_kaldi.sh"
-subprocess.run(["ln", "-s", f"{usc_directory}/steps/_kaldi.sh", f"{usc_directory}/local/_kaldi.sh"])
+# Create soft link to "scoring_kaldi.sh"
+subprocess.run(["ln", "-s", f"{usc_directory}/steps/scoring_kaldi.sh", f"{usc_directory}/local/scoring_kaldi.sh"])
 
 # Create the conf folder
 subprocess.run(["mkdir", f"{usc_directory}/conf",])
