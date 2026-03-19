@@ -29,11 +29,11 @@ steps/decode.sh --nj 4 --cmd run.pl exp/tri/graph_bg data/test exp/tri/test_deco
 
 
 
-local/score_kaldi.sh --cmd "utils/run.pl" data/dev exp/tri/graph_ug exp/tri/dev_decoded_ug
-local/score_kaldi.sh --cmd "utils/run.pl" data/test exp/tri/graph_ug exp/tri/test_decoded_ug
+local/score.sh --cmd "utils/run.pl" data/dev exp/tri/graph_ug exp/tri/dev_decoded_ug
+local/score.sh --cmd "utils/run.pl" data/test exp/tri/graph_ug exp/tri/test_decoded_ug
 
 
 
 
-local/score_kaldi.sh --cmd "utils/run.pl" data/dev exp/tri/graph_bg exp/tri/dev_decoded_bg
-local/score_kaldi.sh --cmd "utils/run.pl" data/test exp/tri/graph_bg exp/tri/test_decoded_bg
+local/score.sh --cmd "utils/run.pl" data/dev exp/tri/graph_bg exp/tri/dev_decoded_bg
+local/score.sh --cmd "utils/run.pl" data/test exp/tri/graph_bg exp/tri/test_decoded_bg
