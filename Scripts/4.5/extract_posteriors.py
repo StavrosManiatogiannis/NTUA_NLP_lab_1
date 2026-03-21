@@ -32,37 +32,39 @@ TEST_ALIGNMENT_DIR = f"{kaldi_root}/exp/tri_ali/tri_ali_test"
 
 
 def extract_logits(model, test_loader):
-    """Runs through the  test_loader and returns a
-    tensor containing the logits (forward output) for each sample in the test set
-    """
     model.eval()
     all_logits = []
 
     with torch.no_grad():
         for inputs, _ in tqdm(test_loader, desc="Extracting logits"):
             inputs = inputs.to(DEVICE)
-            logits = model(inputs)  # [batch_size, num_classes]
+            logits = model(inputs)
             all_logits.append(logits)
 
-    return torch.cat(all_logits, dim=0)  # concatenate along batch dimension
+    return torch.cat(all_logits, dim=0)
 
 
 trainset = TorchSpeechDataset('./', TRAIN_ALIGNMENT_DIR, 'train')
 testset = TorchSpeechDataset('./', TEST_ALIGNMENT_DIR, 'test')
 
-
 scaler = StandardScaler()
 scaler.fit(trainset.feats)
-
 testset.feats = scaler.transform(testset.feats)
 
 test_loader = torch.utils.data.DataLoader(testset, batch_size=128, shuffle=False)
+
+labels = trainset.labels
+counts = np.bincount(labels)
+priors = counts / counts.sum()
+log_priors = np.log(priors + 1e-10)
+log_priors = torch.from_numpy(log_priors).float().to(DEVICE)
 
 torch.serialization.add_safe_globals([TorchDNN])
 dnn = torch.load(CHECKPOINT_TO_LOAD, map_location="cpu", weights_only=False).to(DEVICE)
 
 logits = extract_logits(dnn, test_loader)
-
+log_post = torch.log_softmax(logits, dim=1)
+log_like = log_post - log_priors
 
 post_file = kaldi_io.open_or_fd(OUTPUT_ARK_FILE, 'wb')
 
@@ -70,6 +72,6 @@ start_index = 0
 testset.end_indices[-1] += 1
 
 for i, name in enumerate(testset.uttids):
-    out = logits[start_index:testset.end_indices[i]].cpu().numpy()
+    out = log_like[start_index:testset.end_indices[i]].cpu().numpy()
     start_index = testset.end_indices[i]
     kaldi_io.write_mat(post_file, out, testset.uttids[i])
