@@ -118,6 +118,9 @@ H(w) = -\frac{1}{M} \sum_{n=1}^{M} \log_2 P(w_n)$, \textgreek{ενώ στην π
 
 \textgreek{Η }perplexity \textgreek{είναι μία }intrinsic evaluation, \textgreek{χρήσιμη για την εξαγωγή συμπερασμάτων για την απόδοση των γλωσσικών μοντέλων, ωστόσο δεν είναι ασφαλής για την εκτίμηση της επίδοσης τους σε πραγματικές εφαρμογές. }
 
+\textbf{4.2 Προετοιμασία γλωσσικού μοντέλου}\\
+
+\textgreek{Για το ερώτημα \textbf{4.2.1} προκειμένου να συμπληρώσουμε τα αρχεία }lexicon.txt \textgreek{και} nonsilence\_phones.txt, \textgreek{εξάγαμε τα φωνήματα από το αρχείο λεξικού που μας δόθηκε} (usc lexicon.txt), \textgreek{μέσω της εντολής }python "line.strip().split()" \textgreek{και αποθηκεύσαμε τα φωνήματα σε ένα }set. \textgreek{Ειδική διαχείριση απαιτήθηκε για τον χειρισμό της συμβολοσειράς }"<oov>" (out of vocabulary), \textgreek{η οποία αν και δεν είναι φώνημα, πρέπει να βρίσκεται στο αρχείο }"lexicon.txt" \textgreek{προκειμένου να μπορέσει να εκτελεστεί η εντολή του ερωτήματος 4.2.3. Για αυτόν τον λόγο αποφασίσαμε το αρχείο }"lexicon.txt" \textgreek{να περιέχει την γραμμή }"<oov> sil" \textgreek{αντί της} "<oov> <oov>", \textgreek{ώστε η συμβολοσειρά }"<oov>" \textgreek{να αντιστοιχίζεται στο φώνημα σιωπής και να μην χρειάζεται να συμπεριληφθεί σε κανένα από τα αρχεία } nonsilence\_phones.txt, silence\_phones.txt \textgreek{και} optional\_silence.txt. \textgreek{Στο υπόλοιπο κομμάτι του κώδικα ακολουθούμε τις οδηγίες του ερωτήματος και δεν παρουσιάζεται κάτι άξιο σχολιασμού.}
 
 \end{document}
 
